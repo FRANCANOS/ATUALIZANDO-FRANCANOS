@@ -1,85 +1,78 @@
 <!DOCTYPE html>
 <html>
-
 <head>
 <meta charset="UTF-8">
-<title>Radar de Guerras</title>
+<title>Live News</title>
 
 <style>
-
 body{
-font-family:Arial;
-background:#0f172a;
-color:white;
-margin:0;
-}
-
-header{
-background:#020617;
-padding:20px;
+    font-family: Georgia, serif;
+    background:#f4f4f4;
+    margin:40px;
 }
 
 h1{
-color:#ef4444;
+    text-align:center;
 }
 
 #news{
-padding:20px;
+    max-width:800px;
+    margin:auto;
 }
 
-.card{
-background:#1e293b;
-padding:15px;
-margin-bottom:15px;
-border-radius:8px;
+.article{
+    background:white;
+    padding:15px;
+    margin-bottom:15px;
+    border:1px solid #ddd;
 }
 
+.article a{
+    text-decoration:none;
+    font-weight:bold;
+    color:black;
+}
 </style>
 </head>
 
 <body>
 
-<header>
-<h1>🌍 Radar de Guerras</h1>
-<p>Atualização automática de conflitos no mundo</p>
-</header>
+<h1>📰 Live News</h1>
 
-<div id="news"></div>
+<div id="news">Carregando notícias...</div>
 
 <script>
 
 async function carregarNoticias(){
 
-let url="https://api.rss2json.com/v1/api.json?rss_url=https://feeds.bbci.co.uk/news/world/rss.xml"
+    const url = "https://api.rss2json.com/v1/api.json?rss_url=https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml";
 
-let res=await fetch(url)
+    const resposta = await fetch(url);
+    const dados = await resposta.json();
 
-let data=await res.json()
+    let html = "";
 
-let html=""
+    dados.items.slice(0,10).forEach(noticia => {
 
-data.items.slice(0,10).forEach(n=>{
+        html += `
+        <div class="article">
+        <a href="${noticia.link}" target="_blank">
+        ${noticia.title}
+        </a>
+        <p>${noticia.pubDate}</p>
+        </div>
+        `;
 
-html+=`
-<div class="card">
-<h2>${n.title}</h2>
-<p>${n.description}</p>
-<small>${n.pubDate}</small>
-</div>
-`
+    });
 
-})
-
-document.getElementById("news").innerHTML=html
-
+    document.getElementById("news").innerHTML = html;
 }
 
-carregarNoticias()
+carregarNoticias();
 
-setInterval(carregarNoticias,60000)
+setInterval(carregarNoticias, 30000); // atualiza a cada 30 segundos
 
 </script>
 
 </body>
-
 </html>
