@@ -6,15 +6,17 @@
 <meta charset="UTF-8">
 <title>Atualizando Francanos</title>
 
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
 <style>
 
 body{
-font-family: Arial, Helvetica, sans-serif;
-background:#f2f2f2;
+font-family:Arial, Helvetica, sans-serif;
 margin:0;
+background:#f4f4f4;
 }
 
-/* topo */
+/* TOPO */
 
 header{
 background:#c4170c;
@@ -24,7 +26,7 @@ font-size:28px;
 font-weight:bold;
 }
 
-/* menu */
+/* MENU */
 
 nav{
 background:white;
@@ -39,27 +41,30 @@ color:#c4170c;
 font-weight:bold;
 }
 
-nav a:hover{
-text-decoration:underline;
+/* URGENTE */
+
+.breaking{
+background:#111;
+color:white;
+padding:10px 30px;
+font-weight:bold;
 }
 
-/* container */
+/* CONTAINER */
 
 .container{
 max-width:1100px;
 margin:auto;
 padding:20px;
-display:grid;
-grid-template-columns:2fr 1fr;
-gap:20px;
 }
 
-/* noticia principal */
+/* PRINCIPAL */
 
 .principal{
 background:white;
 border-radius:6px;
 overflow:hidden;
+margin-bottom:30px;
 }
 
 .principal img{
@@ -76,16 +81,11 @@ color:#c4170c;
 padding:0 15px 15px 15px;
 }
 
-/* noticias menores */
-
-.lateral{
-display:flex;
-flex-direction:column;
-gap:20px;
-}
+/* NOTICIAS */
 
 .noticia{
 background:white;
+margin-bottom:20px;
 border-radius:6px;
 overflow:hidden;
 }
@@ -94,16 +94,17 @@ overflow:hidden;
 width:100%;
 }
 
-.noticia h3{
-padding:10px;
+.noticia h2{
+padding:12px;
 margin:0;
 }
 
-footer{
-text-align:center;
-padding:20px;
-color:gray;
+.noticia p{
+padding:0 12px 12px 12px;
+font-size:14px;
 }
+
+/* BOTÃO TRADUZIR */
 
 .translate{
 position:fixed;
@@ -115,10 +116,16 @@ right:20px;
 background:#c4170c;
 color:white;
 border:none;
-padding:10px 14px;
-font-weight:bold;
-border-radius:5px;
+padding:12px;
+border-radius:6px;
 cursor:pointer;
+font-weight:bold;
+}
+
+footer{
+text-align:center;
+padding:20px;
+color:gray;
 }
 
 </style>
@@ -141,6 +148,10 @@ ATUALIZANDO FRANCANOS
 
 </nav>
 
+<div class="breaking">
+🔴 URGENTE: Atualizações de conflitos internacionais
+</div>
+
 <div class="container">
 
 <div class="principal">
@@ -150,38 +161,13 @@ ATUALIZANDO FRANCANOS
 <h1>Conflito no Oriente Médio continua</h1>
 
 <p>
-Novos confrontos foram registrados durante a madrugada. Autoridades internacionais acompanham a situação.
+Novos confrontos foram registrados durante a madrugada.
+Autoridades internacionais monitoram a situação.
 </p>
 
 </div>
 
-<div class="lateral">
-
-<div class="noticia">
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Kyiv_city.jpg">
-
-<h3>Combates continuam na Ucrânia</h3>
-
-</div>
-
-<div class="noticia">
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Beirut_skyline.jpg">
-
-<h3>Tensão cresce no Oriente Médio</h3>
-
-</div>
-
-<div class="noticia">
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/UN_building.jpg">
-
-<h3>ONU discute cessar-fogo</h3>
-
-</div>
-
-</div>
+<div id="news"></div>
 
 </div>
 
@@ -190,16 +176,56 @@ Portal Atualizando Francanos
 </footer>
 
 <div class="translate">
-
 <button onclick="traduzir()">🌐 Traduzir</button>
-
 </div>
 
 <script>
 
+/* TRADUTOR */
+
 function traduzir(){
 window.location.href="https://translate.google.com/translate?sl=auto&tl=pt&u="+window.location.href
 }
+
+/* NOTÍCIAS AUTOMÁTICAS */
+
+async function carregarNoticias(){
+
+let url="https://api.rss2json.com/v1/api.json?rss_url=https://feeds.bbci.co.uk/news/world/rss.xml"
+
+let res=await fetch(url)
+
+let data=await res.json()
+
+let html=""
+
+data.items.slice(0,6).forEach(n=>{
+
+let img=n.thumbnail || "https://upload.wikimedia.org/wikipedia/commons/4/4e/News_icon.png"
+
+html+=`
+
+<div class="noticia">
+
+<img src="${img}">
+
+<h2>${n.title}</h2>
+
+<p>${n.description}</p>
+
+</div>
+
+`
+
+})
+
+document.getElementById("news").innerHTML=html
+
+}
+
+carregarNoticias()
+
+setInterval(carregarNoticias,60000)
 
 </script>
 
