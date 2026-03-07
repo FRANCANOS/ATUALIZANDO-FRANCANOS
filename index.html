@@ -2,11 +2,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Atualizações de Guerras no Mundo</title>
+<title>Radar de Guerras Mundiais</title>
 
 <style>
 body{
-font-family:Arial;
+font-family: Arial;
 background:#0f172a;
 color:white;
 text-align:center;
@@ -16,11 +16,17 @@ h1{
 color:#ff4444;
 }
 
-.news{
+#news{
+max-width:800px;
+margin:auto;
+}
+
+.card{
 background:#1e293b;
-margin:15px;
 padding:15px;
+margin:15px;
 border-radius:10px;
+text-align:left;
 }
 
 a{
@@ -28,64 +34,57 @@ color:#38bdf8;
 text-decoration:none;
 }
 </style>
-
 </head>
 
 <body>
 
-<h1>🌍 Conflitos e Guerras no Mundo</h1>
-<p>Atualizações de portais de notícias internacionais</p>
+<h1>🌍 Radar de Guerras Mundiais</h1>
+<p>Atualização automática de notícias</p>
 
 <div id="news"></div>
 
 <script>
 
-const feeds = [
-"https://feeds.bbci.co.uk/news/world/rss.xml",
-"http://rss.cnn.com/rss/edition_world.rss",
-"https://www.aljazeera.com/xml/rss/all.xml"
-];
-
 async function carregarNoticias(){
 
-let container = document.getElementById("news");
-container.innerHTML="Carregando notícias...";
-
-for (let feed of feeds){
-
-let url = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(feed);
-
-try{
+let url = "https://api.allorigins.win/raw?url=" +
+encodeURIComponent("https://news.google.com/rss/search?q=war&hl=en-US&gl=US&ceid=US:en");
 
 let resposta = await fetch(url);
-let dados = await resposta.json();
+let texto = await resposta.text();
 
-dados.items.slice(0,3).forEach(noticia => {
+let parser = new DOMParser();
+let xml = parser.parseFromString(texto,"text/xml");
 
-let div = document.createElement("div");
-div.className="news";
+let items = xml.querySelectorAll("item");
 
-div.innerHTML = `
-<h3>${noticia.title}</h3>
-<p>${noticia.pubDate}</p>
-<a href="${noticia.link}" target="_blank">Ler notícia completa</a>
+let html="";
+
+items.forEach((item,i)=>{
+
+if(i<10){
+
+let titulo=item.querySelector("title").textContent;
+let link=item.querySelector("link").textContent;
+
+html+=`
+<div class="card">
+<h3>${titulo}</h3>
+<a href="${link}" target="_blank">Ver notícia</a>
+</div>
 `;
 
-container.appendChild(div);
+}
 
 });
 
-}catch(e){
-console.log("Erro ao carregar feed");
-}
-
-}
+document.getElementById("news").innerHTML=html;
 
 }
 
 carregarNoticias();
 
-setInterval(carregarNoticias, 600000);
+setInterval(carregarNoticias,60000);
 
 </script>
 
