@@ -91,6 +91,8 @@ cursor:pointer;
 
 <a onclick="conflitos()">🌍 Conflitos</a>
 
+<a onclick="guerra()">🌍 Mapa de Guerra</a>
+
 <a onclick="navios()">🚢 Navios Militares</a>
 
 <a onclick="foguetes()">🚀 Lançamentos</a>
@@ -103,7 +105,7 @@ cursor:pointer;
 
 <div class="feed">
 
-<h2>Painel de Monitoramento</h2>
+<h2>Painel de Monitoramento Global</h2>
 
 <p>Escolha uma ferramenta no menu acima.</p>
 
@@ -137,6 +139,14 @@ document.getElementById("conteudo").innerHTML=`
 
 }
 
+function guerra(){
+
+document.getElementById("conteudo").innerHTML=`
+<iframe src="https://liveuamap.com/"></iframe>
+`
+
+}
+
 function navios(){
 
 document.getElementById("conteudo").innerHTML=`
@@ -145,12 +155,12 @@ document.getElementById("conteudo").innerHTML=`
 
 <h2>🚢 Monitoramento de Navios Militares</h2>
 
-<p>Radar marítimo global. Alguns navios militares podem aparecer quando o AIS está ativo.</p>
+<p>Alguns navios militares podem ser vistos em radares marítimos públicos quando o AIS está ativo.</p>
 
-<button onclick="window.open('https://www.marinetraffic.com/','_blank')"
+<button onclick="window.open('https://www.vesselfinder.com/aismap','_blank')"
 style="padding:12px;font-size:16px;background:red;color:white;border:none;border-radius:5px;cursor:pointer;">
 
-Abrir radar marítimo
+Abrir Radar Marítimo
 
 </button>
 
@@ -193,16 +203,16 @@ let res=await fetch(url)
 
 let data=await res.json()
 
-let html="<div class='feed'><h2>📰 Notícias Internacionais</h2>"
+let html="<div class='feed'><h2>📰 Notícias de Conflitos</h2>"
 
 data.items.slice(0,10).forEach(n=>{
 
-let resumo=n.title.substring(0,80)
+let resumo=n.title.split(" ").slice(0,10).join(" ")
 
 html+=`
 <div class="item">
 📰 ${n.title}<br>
-🤖 Resumo: ${resumo}...
+🤖 Resumo IA: ${resumo}...
 </div>
 `
 
@@ -211,6 +221,40 @@ html+=`
 html+="</div>"
 
 document.getElementById("conteudo").innerHTML=html
+
+}
+
+let alerta = new Audio("https://actions.google.com/sounds/v1/alarms/alarm_clock.ogg")
+
+function tocarAlerta(){
+
+alerta.play()
+
+}
+
+function simularDados(){
+
+document.getElementById("ataques").innerText =
+Math.floor(Math.random()*50000)+10000
+
+document.getElementById("paises").innerText =
+Math.floor(Math.random()*120)+20
+
+document.getElementById("alertas").innerText =
+Math.floor(Math.random()*300)+50
+
+setInterval(()=>{
+
+document.getElementById("ataques").innerText =
+Math.floor(Math.random()*50000)+10000
+
+document.getElementById("paises").innerText =
+Math.floor(Math.random()*120)+20
+
+document.getElementById("alertas").innerText =
+Math.floor(Math.random()*300)+50
+
+},5000)
 
 }
 
