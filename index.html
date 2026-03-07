@@ -271,21 +271,39 @@ document.getElementById("conteudo").innerHTML=`
 
 <h2>🚢 Monitoramento de Navios Militares</h2>
 
-<p>Navios militares como porta-aviões e submarinos podem ser vistos em radares públicos de navios.</p>
+<p>Monitoramento em tempo real de navios militares, porta-aviões e submarinos.</p>
 
-<button onclick="window.open('https://www.vesselfinder.com/aismap','_blank')"
-style="padding:12px;font-size:16px;background:red;color:white;border:none;border-radius:5px;cursor:pointer;">
-
-Abrir Radar Marítimo
-
-</button>
+<div id="naviosList"></div>
 
 </div>
 
 `
 
+mostrarNavios()
+
 }
 
+async function mostrarNavios() {
+  // Simulação de dados, substitua com a URL correta para API de navios
+  const url = 'https://api.vesselfinder.com/vessels'; 
+  const response = await fetch(url);
+  const data = await response.json();
+
+  let html = '<h3>Navios Recentes</h3>';
+
+  data.vessels.forEach(navio => {
+    html += `
+      <div class="item">
+        <strong>Nome:</strong> ${navio.name} <br>
+        <strong>Tipo:</strong> ${navio.type} <br>
+        <strong>Posição:</strong> Latitude: ${navio.latitude}, Longitude: ${navio.longitude} <br>
+        <strong>Status:</strong> ${navio.status}
+      </div>
+    `;
+  });
+
+  document.getElementById('naviosList').innerHTML = html;
+}
 </script>
 
 </body>
