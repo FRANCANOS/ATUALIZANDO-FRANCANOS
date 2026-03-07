@@ -63,6 +63,16 @@ border-left:3px solid red;
 padding-left:10px;
 }
 
+button{
+padding:12px;
+font-size:16px;
+background:red;
+color:white;
+border:none;
+border-radius:5px;
+cursor:pointer;
+}
+
 </style>
 
 </head>
@@ -80,6 +90,8 @@ padding-left:10px;
 <a onclick="militares()">🛩 Aviões Militares</a>
 
 <a onclick="conflitos()">🌍 Conflitos</a>
+
+<a onclick="ciber()">💻 Ciberataques</a>
 
 <a onclick="foguetes()">🚀 Lançamentos</a>
 
@@ -121,6 +133,28 @@ function conflitos(){
 
 document.getElementById("conteudo").innerHTML=`
 <iframe src="https://liveuamap.com/"></iframe>
+`
+
+}
+
+function ciber(){
+
+document.getElementById("conteudo").innerHTML=`
+
+<div class="feed">
+
+<h2>💻 Ataques Cibernéticos Globais</h2>
+
+<p>Mapa mundial de ataques DDoS em tempo quase real.</p>
+
+<button onclick="window.open('https://www.digitalattackmap.com','_blank')">
+
+Abrir mapa de ataques
+
+</button>
+
+</div>
+
 `
 
 }
