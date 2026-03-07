@@ -96,8 +96,8 @@ iframe {
 <div id="conteudo">
 
 <div class="feed">
-<h2>Painel de Monitoramento</h2>
-<p>Escolha uma ferramenta no menu acima.</p>
+  <h2>Painel de Monitoramento</h2>
+  <p>Escolha uma ferramenta no menu acima.</p>
 </div>
 
 </div>
@@ -123,27 +123,27 @@ function conflitos() {
 }
 
 function ciber() {
-  document.getElementById("conteudo").innerHTML = `
+  document.getElementById("conteudo").innerHTML = ` 
   <div style="display:flex;flex-direction:column;height:100%">
-  <div class="feed">
-    <h2>💻 Monitoramento de Ciberataques</h2>
-    <p>Ataques detectados em tempo quase real.</p>
-    <div class="painel">
-      <div class="card">
-        🌍 Ataques Globais Hoje<br>
-        <b id="ataques">Carregando...</b>
-      </div>
-      <div class="card">
-        ⚠️ Países Atacados<br>
-        <b id="paises">Carregando...</b>
-      </div>
-      <div class="card">
-        🚨 Alertas Ativos<br>
-        <b id="alertas">Carregando...</b>
+    <div class="feed">
+      <h2>💻 Monitoramento de Ciberataques</h2>
+      <p>Ataques detectados em tempo quase real.</p>
+      <div class="painel">
+        <div class="card">
+          🌍 Ataques Globais Hoje<br>
+          <b id="ataques">Carregando...</b>
+        </div>
+        <div class="card">
+          ⚠️ Países Atacados<br>
+          <b id="paises">Carregando...</b>
+        </div>
+        <div class="card">
+          🚨 Alertas Ativos<br>
+          <b id="alertas">Carregando...</b>
+        </div>
       </div>
     </div>
-  </div>
-  <iframe src="https://livethreatmap.radware.com/" style="flex:1"></iframe>
+    <iframe src="https://livethreatmap.radware.com/" style="flex:1"></iframe>
   </div>
   `;
   simularDados();
@@ -190,12 +190,12 @@ async function noticias() {
   let html = "<div class='feed'><h2>📰 Notícias de Conflitos</h2>";
 
   data.items.slice(0, 10).forEach(n => {
-    let resumo = n.title.split(" ").slice(0, 10).join(" ");
+    let resumo = n.title.substring(0, 80);  // Pegando um resumo do título.
 
     html += `
     <div class="item">
     📰 ${n.title}<br>
-    🤖 Resumo IA: ${resumo}...
+    Resumo: ${resumo}...
     </div>
     `;
   });
