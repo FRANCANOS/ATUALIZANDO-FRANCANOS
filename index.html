@@ -13,13 +13,13 @@
 body{
 margin:0;
 font-family:Arial;
-background:#0a0a0a;
+background:#0b0b0b;
 color:white;
 }
 
 header{
 background:#c4170c;
-padding:18px;
+padding:20px;
 font-size:26px;
 font-weight:bold;
 }
@@ -29,6 +29,7 @@ background:#111;
 padding:12px;
 display:flex;
 gap:20px;
+flex-wrap:wrap;
 }
 
 nav a{
@@ -43,9 +44,7 @@ color:#ff4444;
 }
 
 #conteudo{
-
 height:90vh;
-
 }
 
 iframe{
@@ -56,7 +55,6 @@ border:none;
 
 .feed{
 padding:20px;
-font-size:16px;
 }
 
 .item{
@@ -79,7 +77,9 @@ padding-left:10px;
 
 <a onclick="radar()">✈️ Radar Aviões</a>
 
-<a onclick="navios()">🚢 Radar Navios</a>
+<a onclick="militares()">🛩 Aviões Militares</a>
+
+<a onclick="navios()">🚢 Navios</a>
 
 <a onclick="satelites()">🛰 Satélites</a>
 
@@ -95,7 +95,7 @@ padding-left:10px;
 
 <div class="feed">
 
-<h2>Centro de monitoramento global</h2>
+<h2>Painel de Monitoramento</h2>
 
 <p>Escolha uma ferramenta no menu acima.</p>
 
@@ -113,18 +113,10 @@ document.getElementById("conteudo").innerHTML=`
 
 }
 
-function navios(){
+function militares(){
 
 document.getElementById("conteudo").innerHTML=`
-<iframe src="https://www.vesselfinder.com/aismap"></iframe>
-`
-
-}
-
-function satelites(){
-
-document.getElementById("conteudo").innerHTML=`
-<iframe src="https://satellitemap.space/"></iframe>
+<iframe src="https://globe.adsbexchange.com/?mil"></iframe>
 `
 
 }
@@ -137,13 +129,25 @@ document.getElementById("conteudo").innerHTML=`
 
 }
 
+function navios(){
+
+window.open("https://www.vesselfinder.com/aismap","_blank")
+
+}
+
+function satelites(){
+
+window.open("https://satellitemap.space","_blank")
+
+}
+
 async function foguetes(){
 
 let res=await fetch("https://ll.thespacedevs.com/2.2.0/launch/upcoming/?limit=5")
 
 let data=await res.json()
 
-let html="<div class='feed'><h2>🚀 Lançamentos</h2>"
+let html="<div class='feed'><h2>🚀 Lançamentos Espaciais</h2>"
 
 data.results.forEach(l=>{
 
@@ -170,7 +174,7 @@ let res=await fetch(url)
 
 let data=await res.json()
 
-let html="<div class='feed'><h2>📰 Notícias</h2>"
+let html="<div class='feed'><h2>📰 Notícias Internacionais</h2>"
 
 data.items.slice(0,10).forEach(n=>{
 
