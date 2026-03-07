@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
 <meta charset="UTF-8">
 <title>Atualizando Francanos</title>
@@ -69,7 +68,6 @@ padding:0 15px 10px 15px;
 }
 
 </style>
-
 </head>
 
 <body>
@@ -86,35 +84,51 @@ ATUALIZANDO FRANCANOS
 
 <div class="container">
 
+<div id="news"></div>
+
+</div>
+
+<script>
+
+async function carregarNoticias(){
+
+let url="https://api.rss2json.com/v1/api.json?rss_url=https://feeds.bbci.co.uk/news/world/rss.xml"
+
+let res=await fetch(url)
+
+let data=await res.json()
+
+let html=""
+
+data.items.slice(0,10).forEach(n=>{
+
+let imagem = n.thumbnail || "https://upload.wikimedia.org/wikipedia/commons/3/3a/News_icon.png"
+
+html+=`
 <div class="noticia">
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Gaza_Skyline.jpg">
+<img src="${imagem}">
 
-<h2>Conflito no Oriente Médio continua</h2>
+<h2>${n.title}</h2>
 
-<p class="data">Atualizado agora</p>
+<p class="data">${n.pubDate}</p>
 
-<p>
-Novos ataques foram registrados durante a madrugada na região.
-</p>
+<p>${n.description}</p>
 
 </div>
+`
 
-<div class="noticia">
+})
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Kyiv_city.jpg">
+document.getElementById("news").innerHTML=html
 
-<h2>Combates continuam na Ucrânia</h2>
+}
 
-<p class="data">Atualizado agora</p>
+carregarNoticias()
 
-<p>
-Forças ucranianas e russas seguem em confronto em várias regiões.
-</p>
+setInterval(carregarNoticias,60000)
 
-</div>
-
-</div>
+</script>
 
 </body>
 </html>
