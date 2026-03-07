@@ -5,23 +5,24 @@
 
 <meta charset="UTF-8">
 <title>Atualizando Francanos</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 <style>
 
+/* BASE */
+
 body{
-font-family:Arial, Helvetica, sans-serif;
 margin:0;
-background:#f4f4f4;
+font-family: Arial, Helvetica, sans-serif;
+background:#f2f2f2;
 }
 
-/* TOPO */
+/* HEADER */
 
 header{
 background:#c4170c;
 color:white;
-padding:15px 30px;
+padding:18px 30px;
 font-size:28px;
 font-weight:bold;
 }
@@ -30,8 +31,8 @@ font-weight:bold;
 
 nav{
 background:white;
-padding:12px 30px;
 border-bottom:1px solid #ddd;
+padding:10px 30px;
 }
 
 nav a{
@@ -39,6 +40,11 @@ margin-right:20px;
 text-decoration:none;
 color:#c4170c;
 font-weight:bold;
+font-size:15px;
+}
+
+nav a:hover{
+text-decoration:underline;
 }
 
 /* URGENTE */
@@ -53,18 +59,19 @@ font-weight:bold;
 /* CONTAINER */
 
 .container{
-max-width:1100px;
+max-width:1200px;
 margin:auto;
 padding:20px;
 }
 
-/* PRINCIPAL */
+/* DESTAQUE */
 
 .principal{
 background:white;
 border-radius:6px;
 overflow:hidden;
 margin-bottom:30px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
 .principal img{
@@ -72,29 +79,47 @@ width:100%;
 }
 
 .principal h1{
-padding:15px;
 margin:0;
+padding:18px;
 color:#c4170c;
+font-size:30px;
 }
 
 .principal p{
-padding:0 15px 15px 15px;
+padding:0 18px 18px 18px;
+font-size:16px;
 }
 
-/* NOTICIAS */
+/* GRID NOTICIAS */
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:20px;
+}
+
+/* CARD */
 
 .noticia{
 background:white;
-margin-bottom:20px;
 border-radius:6px;
 overflow:hidden;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
+transition:0.2s;
+}
+
+.noticia:hover{
+transform:translateY(-3px);
 }
 
 .noticia img{
 width:100%;
+height:180px;
+object-fit:cover;
 }
 
 .noticia h2{
+font-size:18px;
 padding:12px;
 margin:0;
 }
@@ -102,12 +127,27 @@ margin:0;
 .noticia p{
 padding:0 12px 12px 12px;
 font-size:14px;
+color:#444;
 }
 
+.noticia a{
+text-decoration:none;
+color:#111;
+}
+
+.noticia a:hover{
+color:#c4170c;
+}
+
+/* FOOTER */
+
 footer{
+margin-top:40px;
+background:#111;
+color:#ccc;
 text-align:center;
-padding:20px;
-color:gray;
+padding:25px;
+font-size:14px;
 }
 
 </style>
@@ -122,9 +162,9 @@ ATUALIZANDO FRANCANOS
 
 <nav>
 
-<a href="index.html">Início</a>
-<a href="guerras/israel.html">Israel</a>
-<a href="guerras/ucrania.html">Ucrânia</a>
+<a href="#">Início</a>
+<a href="#">Israel</a>
+<a href="#">Ucrânia</a>
 <a href="#">Mundo</a>
 <a href="#">Tecnologia</a>
 
@@ -136,6 +176,8 @@ ATUALIZANDO FRANCANOS
 
 <div class="container">
 
+<!-- NOTICIA PRINCIPAL -->
+
 <div class="principal">
 
 <img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Gaza_Skyline.jpg">
@@ -143,23 +185,25 @@ ATUALIZANDO FRANCANOS
 <h1>Conflito no Oriente Médio continua</h1>
 
 <p>
-Novos confrontos foram registrados durante a madrugada.
-Autoridades internacionais monitoram a situação.
+Novos confrontos foram registrados durante a madrugada. 
+Autoridades internacionais monitoram a situação em tempo real.
 </p>
 
 </div>
 
-<div id="news"></div>
+<!-- GRID DE NOTICIAS -->
+
+<div id="news" class="grid"></div>
 
 </div>
 
 <footer>
-Portal Atualizando Francanos
+
+Portal Atualizando Francanos • Notícias em tempo real
+
 </footer>
 
 <script>
-
-/* NOTÍCIAS AUTOMÁTICAS */
 
 async function carregarNoticias(){
 
@@ -171,7 +215,7 @@ let data=await res.json()
 
 let html=""
 
-data.items.slice(0,6).forEach(n=>{
+data.items.slice(0,9).forEach(n=>{
 
 let img=n.thumbnail || "https://upload.wikimedia.org/wikipedia/commons/4/4e/News_icon.png"
 
@@ -179,11 +223,17 @@ html+=`
 
 <div class="noticia">
 
+<a href="${n.link}" target="_blank">
+
 <img src="${img}">
 
 <h2>${n.title}</h2>
 
-<p>${n.description}</p>
+</a>
+
+<p>${new Date(n.pubDate).toLocaleString()}</p>
+
+<p>${n.description.substring(0,120)}...</p>
 
 </div>
 
@@ -197,7 +247,7 @@ document.getElementById("news").innerHTML=html
 
 carregarNoticias()
 
-setInterval(carregarNoticias,60000)
+setInterval(carregarNoticias,20000)
 
 </script>
 
