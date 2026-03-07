@@ -8,7 +8,7 @@
 body{
     font-family: Georgia, serif;
     background:#f4f4f4;
-    margin:40px;
+    margin:30px;
 }
 
 h1{
@@ -16,21 +16,38 @@ h1{
 }
 
 #news{
-    max-width:800px;
+    max-width:1000px;
     margin:auto;
 }
 
 .article{
+    display:flex;
+    gap:15px;
     background:white;
     padding:15px;
     margin-bottom:15px;
     border:1px solid #ddd;
 }
 
+.article img{
+    width:180px;
+    height:120px;
+    object-fit:cover;
+}
+
+.article h2{
+    margin:0;
+    font-size:20px;
+}
+
 .article a{
     text-decoration:none;
-    font-weight:bold;
     color:black;
+}
+
+.date{
+    font-size:12px;
+    color:gray;
 }
 </style>
 </head>
@@ -45,32 +62,45 @@ h1{
 
 async function carregarNoticias(){
 
-    const url = "https://api.rss2json.com/v1/api.json?rss_url=https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml";
+const url = "https://api.rss2json.com/v1/api.json?rss_url=https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml";
 
-    const resposta = await fetch(url);
-    const dados = await resposta.json();
+const resposta = await fetch(url);
+const dados = await resposta.json();
 
-    let html = "";
+let html = "";
 
-    dados.items.slice(0,10).forEach(noticia => {
+dados.items.slice(0,10).forEach(noticia => {
 
-        html += `
-        <div class="article">
-        <a href="${noticia.link}" target="_blank">
-        ${noticia.title}
-        </a>
-        <p>${noticia.pubDate}</p>
-        </div>
-        `;
+let imagem = "";
 
-    });
+if(noticia.thumbnail){
+    imagem = noticia.thumbnail;
+}
 
-    document.getElementById("news").innerHTML = html;
+html += `
+<div class="article">
+
+<img src="${imagem}">
+
+<div>
+<a href="${noticia.link}" target="_blank">
+<h2>${noticia.title}</h2>
+</a>
+
+<div class="date">${noticia.pubDate}</div>
+</div>
+
+</div>
+`;
+
+});
+
+document.getElementById("news").innerHTML = html;
+
 }
 
 carregarNoticias();
-
-setInterval(carregarNoticias, 30000); // atualiza a cada 30 segundos
+setInterval(carregarNoticias,30000);
 
 </script>
 
