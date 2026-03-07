@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Atualizações de Guerras no Mundo</title>
+
+<style>
+body{
+font-family:Arial;
+background:#0f172a;
+color:white;
+text-align:center;
+}
+
+h1{
+color:#ff4444;
+}
+
+.news{
+background:#1e293b;
+margin:15px;
+padding:15px;
+border-radius:10px;
+}
+
+a{
+color:#38bdf8;
+text-decoration:none;
+}
+</style>
+
+</head>
+
+<body>
+
+<h1>🌍 Conflitos e Guerras no Mundo</h1>
+<p>Atualizações de portais de notícias internacionais</p>
+
+<div id="news"></div>
+
+<script>
+
+const feeds = [
+"https://feeds.bbci.co.uk/news/world/rss.xml",
+"http://rss.cnn.com/rss/edition_world.rss",
+"https://www.aljazeera.com/xml/rss/all.xml"
+];
+
+async function carregarNoticias(){
+
+let container = document.getElementById("news");
+container.innerHTML="Carregando notícias...";
+
+for (let feed of feeds){
+
+let url = "https://api.rss2json.com/v1/api.json?rss_url=" + encodeURIComponent(feed);
+
+try{
+
+let resposta = await fetch(url);
+let dados = await resposta.json();
+
+dados.items.slice(0,3).forEach(noticia => {
+
+let div = document.createElement("div");
+div.className="news";
+
+div.innerHTML = `
+<h3>${noticia.title}</h3>
+<p>${noticia.pubDate}</p>
+<a href="${noticia.link}" target="_blank">Ler notícia completa</a>
+`;
+
+container.appendChild(div);
+
+});
+
+}catch(e){
+console.log("Erro ao carregar feed");
+}
+
+}
+
+}
+
+carregarNoticias();
+
+setInterval(carregarNoticias, 600000);
+
+</script>
+
+</body>
+</html>
