@@ -9,72 +9,70 @@
 <title>Centro Global de Monitoramento</title>
 
 <style>
-
-body{
-margin:0;
-font-family:Arial;
-background:#0b0b0b;
-color:white;
+body {
+  margin: 0;
+  font-family: Arial;
+  background: #0b0b0b;
+  color: white;
 }
 
-header{
-background:#c4170c;
-padding:20px;
-font-size:26px;
-font-weight:bold;
+header {
+  background: #c4170c;
+  padding: 20px;
+  font-size: 26px;
+  font-weight: bold;
 }
 
-nav{
-background:#111;
-padding:12px;
-display:flex;
-gap:20px;
-flex-wrap:wrap;
+nav {
+  background: #111;
+  padding: 12px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
 }
 
-nav a{
-color:white;
-text-decoration:none;
-font-weight:bold;
-cursor:pointer;
+nav a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
 }
 
-nav a:hover{
-color:#ff4444;
+nav a:hover {
+  color: #ff4444;
 }
 
-#conteudo{
-height:90vh;
+#conteudo {
+  height: 90vh;
 }
 
-iframe{
-width:100%;
-height:100%;
-border:none;
+iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
 }
 
-.feed{
-padding:20px;
+.feed {
+  padding: 20px;
 }
 
-.item{
-margin-bottom:15px;
-border-left:3px solid red;
-padding-left:10px;
+.item {
+  margin-bottom: 15px;
+  border-left: 3px solid red;
+  padding-left: 10px;
 }
 
-.painel{
-display:flex;
-gap:20px;
-margin-top:10px;
+.painel {
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
 }
 
-.card{
-background:#1a1a1a;
-padding:10px;
-border-radius:5px;
+.card {
+  background: #1a1a1a;
+  padding: 10px;
+  border-radius: 5px;
 }
-
 </style>
 
 </head>
@@ -86,212 +84,149 @@ border-radius:5px;
 </header>
 
 <nav>
-
-<a onclick="radar()">✈️ Radar Aviões</a>
-
-<a onclick="militares()">🛩 Aviões Militares</a>
-
-<a onclick="conflitos()">🌍 Conflitos</a>
-
-<a onclick="ciber()">💻 Ciberataques</a>
-
-<a onclick="foguetes()">🚀 Lançamentos</a>
-
-<a onclick="navios()">🚢 Navios Militares</a>
-
-<a onclick="noticias()">📰 Notícias</a>
-
+  <a onclick="radar()">✈️ Radar Aviões</a>
+  <a onclick="militares()">🛩 Aviões Militares</a>
+  <a onclick="conflitos()">🌍 Conflitos</a>
+  <a onclick="ciber()">💻 Ciberataques</a>
+  <a onclick="foguetes()">🚀 Lançamentos</a>
+  <a onclick="navios()">🚢 Navios Militares</a>
+  <a onclick="noticias()">📰 Notícias</a>
 </nav>
 
 <div id="conteudo">
 
 <div class="feed">
-
 <h2>Painel de Monitoramento</h2>
-
 <p>Escolha uma ferramenta no menu acima.</p>
-
 </div>
 
 </div>
 
 <script>
 
-function radar(){
-
-document.getElementById("conteudo").innerHTML=`
-<iframe src="https://globe.adsbexchange.com/"></iframe>
-`
-
+function radar() {
+  document.getElementById("conteudo").innerHTML = `
+  <iframe src="https://globe.adsbexchange.com/"></iframe>
+  `;
 }
 
-function militares(){
-
-document.getElementById("conteudo").innerHTML=`
-<iframe src="https://globe.adsbexchange.com/?mil"></iframe>
-`
-
+function militares() {
+  document.getElementById("conteudo").innerHTML = `
+  <iframe src="https://globe.adsbexchange.com/?mil"></iframe>
+  `;
 }
 
-function conflitos(){
-
-document.getElementById("conteudo").innerHTML=`
-<iframe src="https://liveuamap.com/"></iframe>
-`
-
+function conflitos() {
+  document.getElementById("conteudo").innerHTML = `
+  <iframe src="https://liveuamap.com/"></iframe>
+  `;
 }
 
-function ciber(){
-
-document.getElementById("conteudo").innerHTML=` 
-
-<div style="display:flex;flex-direction:column;height:100%">
-
-<div class="feed">
-
-<h2>💻 Monitoramento de Ciberataques</h2>
-
-<p>Ataques detectados em tempo quase real.</p>
-
-<div class="painel">
-
-<div class="card">
-🌍 Ataques Globais Hoje<br>
-<b id="ataques">Carregando...</b>
-</div>
-
-<div class="card">
-⚠️ Países Atacados<br>
-<b id="paises">Carregando...</b>
-</div>
-
-<div class="card">
-🚨 Alertas Ativos<br>
-<b id="alertas">Carregando...</b>
-</div>
-
-</div>
-
-</div>
-
-<iframe src="https://livethreatmap.radware.com/" style="flex:1"></iframe>
-
-</div>
-`
-
-simularDados()
-
+function ciber() {
+  document.getElementById("conteudo").innerHTML = `
+  <div style="display:flex;flex-direction:column;height:100%">
+  <div class="feed">
+    <h2>💻 Monitoramento de Ciberataques</h2>
+    <p>Ataques detectados em tempo quase real.</p>
+    <div class="painel">
+      <div class="card">
+        🌍 Ataques Globais Hoje<br>
+        <b id="ataques">Carregando...</b>
+      </div>
+      <div class="card">
+        ⚠️ Países Atacados<br>
+        <b id="paises">Carregando...</b>
+      </div>
+      <div class="card">
+        🚨 Alertas Ativos<br>
+        <b id="alertas">Carregando...</b>
+      </div>
+    </div>
+  </div>
+  <iframe src="https://livethreatmap.radware.com/" style="flex:1"></iframe>
+  </div>
+  `;
+  simularDados();
 }
 
-function simularDados(){
+function simularDados() {
+  document.getElementById("ataques").innerText = Math.floor(Math.random() * 50000) + 10000;
+  document.getElementById("paises").innerText = Math.floor(Math.random() * 120) + 20;
+  document.getElementById("alertas").innerText = Math.floor(Math.random() * 300) + 50;
 
-document.getElementById("ataques").innerText =
-Math.floor(Math.random()*50000)+10000
-
-document.getElementById("paises").innerText =
-Math.floor(Math.random()*120)+20
-
-document.getElementById("alertas").innerText =
-Math.floor(Math.random()*300)+50
-
-setInterval(()=>{
-
-document.getElementById("ataques").innerText =
-Math.floor(Math.random()*50000)+10000
-
-document.getElementById("paises").innerText =
-Math.floor(Math.random()*120)+20
-
-document.getElementById("alertas").innerText =
-Math.floor(Math.random()*300)+50
-
-},5000)
-
+  setInterval(() => {
+    document.getElementById("ataques").innerText = Math.floor(Math.random() * 50000) + 10000;
+    document.getElementById("paises").innerText = Math.floor(Math.random() * 120) + 20;
+    document.getElementById("alertas").innerText = Math.floor(Math.random() * 300) + 50;
+  }, 5000);
 }
 
-async function foguetes(){
+async function foguetes() {
+  let res = await fetch("https://ll.thespacedevs.com/2.2.0/launch/upcoming/?limit=5");
+  let data = await res.json();
 
-let res=await fetch("https://ll.thespacedevs.com/2.2.0/launch/upcoming/?limit=5")
+  let html = "<div class='feed'><h2>🚀 Lançamentos Espaciais</h2>";
 
-let data=await res.json()
+  data.results.forEach(l => {
+    html += `
+    <div class="item">
+    🚀 ${l.name}<br>
+    📅 ${l.net}
+    </div>
+    `;
+  });
 
-let html="<div class='feed'><h2>🚀 Lançamentos Espaciais</h2>"
+  html += "</div>";
 
-data.results.forEach(l=>{
-
-html+=`
-<div class="item">
-🚀 ${l.name}<br>
-📅 ${l.net}
-</div>
-`
-
-})
-
-html+="</div>"
-
-document.getElementById("conteudo").innerHTML=html
-
+  document.getElementById("conteudo").innerHTML = html;
 }
 
-async function noticias(){
+async function noticias() {
+  let url = "https://api.rss2json.com/v1/api.json?rss_url=https://feeds.bbci.co.uk/news/world/rss.xml";
+  let res = await fetch(url);
 
-let url="https://api.rss2json.com/v1/api.json?rss_url=https://feeds.bbci.co.uk/news/world/rss.xml"
+  let data = await res.json();
 
-let res=await fetch(url)
+  let html = "<div class='feed'><h2>📰 Notícias de Conflitos</h2>";
 
-let data=await res.json()
+  data.items.slice(0, 10).forEach(n => {
+    let resumo = n.title.split(" ").slice(0, 10).join(" ");
 
-let html="<div class='feed'><h2>📰 Notícias de Conflitos</h2>"
+    html += `
+    <div class="item">
+    📰 ${n.title}<br>
+    🤖 Resumo IA: ${resumo}...
+    </div>
+    `;
+  });
 
-data.items.slice(0,10).forEach(n=>{
+  html += "</div>";
 
-let resumo=n.title.split(" ").slice(0,10).join(" ")
-
-html+=`
-<div class="item">
-📰 ${n.title}<br>
-🤖 Resumo IA: ${resumo}...
-</div>
-`
-
-})
-
-html+="</div>"
-
-document.getElementById("conteudo").innerHTML=html
-
+  document.getElementById("conteudo").innerHTML = html;
 }
 
-function navios(){
+function navios() {
+  document.getElementById("conteudo").innerHTML = `
+  <div class="feed">
+  <h2>🚢 Monitoramento de Navios Militares</h2>
+  <p>Monitoramento em tempo real de navios militares, porta-aviões e submarinos.</p>
+  <div id="naviosList"></div>
+  </div>
+  `;
 
-document.getElementById("conteudo").innerHTML=`
-
-<div class="feed">
-
-<h2>🚢 Monitoramento de Navios Militares</h2>
-
-<p>Monitoramento em tempo real de navios militares, porta-aviões e submarinos.</p>
-
-<div id="naviosList"></div>
-
-</div>
-
-`
-
-mostrarNavios()
-
+  mostrarNavios();
 }
 
 async function mostrarNavios() {
   // Simulação de dados, substitua com a URL correta para API de navios
-  const url = 'https://api.vesselfinder.com/vessels'; 
-  const response = await fetch(url);
-  const data = await response.json();
+  const data = [
+    { name: "USS Nimitz", type: "Porta-aviões", latitude: "23.122", longitude: "131.512", status: "Em operação" },
+    { name: "USS Ohio", type: "Submarino nuclear", latitude: "22.033", longitude: "132.765", status: "Em operação" }
+  ];
 
   let html = '<h3>Navios Recentes</h3>';
 
-  data.vessels.forEach(navio => {
+  data.forEach(navio => {
     html += `
       <div class="item">
         <strong>Nome:</strong> ${navio.name} <br>
@@ -304,6 +239,7 @@ async function mostrarNavios() {
 
   document.getElementById('naviosList').innerHTML = html;
 }
+
 </script>
 
 </body>
