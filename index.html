@@ -32,13 +32,13 @@ text-align:center;
 
 nav a{
 color:white;
-margin:10px;
+margin:15px;
 text-decoration:none;
 font-weight:bold;
 }
 
 .container{
-max-width:900px;
+max-width:1000px;
 margin:auto;
 padding:20px;
 }
@@ -59,6 +59,14 @@ color:#94a3b8;
 font-size:12px;
 }
 
+.live{
+background:red;
+padding:5px 10px;
+border-radius:5px;
+font-size:12px;
+margin-left:10px;
+}
+
 </style>
 
 </head>
@@ -68,13 +76,13 @@ font-size:12px;
 <header>
 
 <h1>🌍 Radar Global de Guerras</h1>
-<p>Atualização automática de conflitos mundiais</p>
+<p>Atualizações de conflitos no mundo</p>
 
 </header>
 
 <nav>
 
-<a href="#">Início</a>
+<a href="#">Home</a>
 <a href="#">Oriente Médio</a>
 <a href="#">Europa</a>
 <a href="#">Ásia</a>
@@ -83,6 +91,8 @@ font-size:12px;
 </nav>
 
 <div class="container">
+
+<h2>🔴 Notícias ao Vivo</h2>
 
 <div id="news"></div>
 
@@ -100,12 +110,12 @@ let data=await res.json()
 
 let html=""
 
-data.items.slice(0,15).forEach(n=>{
+data.items.slice(0,20).forEach(n=>{
 
 html+=`
 <div class="card">
 
-<h2>${n.title}</h2>
+<h2>${n.title} <span class="live">LIVE</span></h2>
 
 <p>${n.description}</p>
 
