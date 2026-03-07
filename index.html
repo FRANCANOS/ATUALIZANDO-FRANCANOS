@@ -63,14 +63,16 @@ border-left:3px solid red;
 padding-left:10px;
 }
 
-button{
-padding:12px;
-font-size:16px;
-background:red;
-color:white;
-border:none;
+.painel{
+display:flex;
+gap:20px;
+margin-top:10px;
+}
+
+.card{
+background:#1a1a1a;
+padding:10px;
 border-radius:5px;
-cursor:pointer;
 }
 
 </style>
@@ -141,21 +143,67 @@ function ciber(){
 
 document.getElementById("conteudo").innerHTML=`
 
+<div style="display:flex;flex-direction:column;height:100%">
+
 <div class="feed">
 
-<h2>💻 Ataques Cibernéticos Globais</h2>
+<h2>💻 Monitoramento de Ciberataques</h2>
 
-<p>Mapa mundial de ataques DDoS em tempo quase real.</p>
+<p>Ataques detectados em tempo quase real.</p>
 
-<button onclick="window.open('https://www.digitalattackmap.com','_blank')">
+<div class="painel">
 
-Abrir mapa de ataques
+<div class="card">
+🌍 Ataques Globais Hoje<br>
+<b id="ataques">Carregando...</b>
+</div>
 
-</button>
+<div class="card">
+⚠️ Países Atacados<br>
+<b id="paises">Carregando...</b>
+</div>
+
+<div class="card">
+🚨 Alertas Ativos<br>
+<b id="alertas">Carregando...</b>
+</div>
 
 </div>
 
+</div>
+
+<iframe src="https://livethreatmap.radware.com/" style="flex:1"></iframe>
+
+</div>
 `
+
+simularDados()
+
+}
+
+function simularDados(){
+
+document.getElementById("ataques").innerText =
+Math.floor(Math.random()*50000)+10000
+
+document.getElementById("paises").innerText =
+Math.floor(Math.random()*120)+20
+
+document.getElementById("alertas").innerText =
+Math.floor(Math.random()*300)+50
+
+setInterval(()=>{
+
+document.getElementById("ataques").innerText =
+Math.floor(Math.random()*50000)+10000
+
+document.getElementById("paises").innerText =
+Math.floor(Math.random()*120)+20
+
+document.getElementById("alertas").innerText =
+Math.floor(Math.random()*300)+50
+
+},5000)
 
 }
 
