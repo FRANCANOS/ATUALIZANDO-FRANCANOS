@@ -1,92 +1,80 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Radar de Guerras Mundiais</title>
+<title>Guerras ao Vivo</title>
 
 <style>
+
 body{
-font-family: Arial;
-background:#0f172a;
+font-family:Arial;
+background:#f0f0f0;
+margin:0;
+}
+
+header{
+background:black;
 color:white;
-text-align:center;
+padding:20px;
 }
 
-h1{
-color:#ff4444;
-}
-
-#news{
-max-width:800px;
-margin:auto;
-}
-
-.card{
-background:#1e293b;
-padding:15px;
-margin:15px;
-border-radius:10px;
-text-align:left;
-}
-
-a{
-color:#38bdf8;
+nav a{
+color:white;
+margin-right:20px;
 text-decoration:none;
+font-weight:bold;
 }
+
+.container{
+padding:20px;
+}
+
+.noticia{
+background:white;
+padding:15px;
+margin-bottom:15px;
+border-radius:5px;
+}
+
 </style>
+
 </head>
 
 <body>
 
-<h1>🌍 Radar de Guerras Mundiais</h1>
-<p>Atualização automática de notícias</p>
+<header>
+<h1>🌍 Guerras ao Vivo</h1>
 
-<div id="news"></div>
+<nav>
+<a href="#">Início</a>
+<a href="#">Israel</a>
+<a href="#">Irã</a>
+<a href="#">Ucrânia</a>
+<a href="#">Rússia</a>
+</nav>
 
-<script>
+</header>
 
-async function carregarNoticias(){
+<div class="container">
 
-let url = "https://api.allorigins.win/raw?url=" +
-encodeURIComponent("https://news.google.com/rss/search?q=war&hl=en-US&gl=US&ceid=US:en");
-
-let resposta = await fetch(url);
-let texto = await resposta.text();
-
-let parser = new DOMParser();
-let xml = parser.parseFromString(texto,"text/xml");
-
-let items = xml.querySelectorAll("item");
-
-let html="";
-
-items.forEach((item,i)=>{
-
-if(i<10){
-
-let titulo=item.querySelector("title").textContent;
-let link=item.querySelector("link").textContent;
-
-html+=`
-<div class="card">
-<h3>${titulo}</h3>
-<a href="${link}" target="_blank">Ver notícia</a>
+<div class="noticia">
+<h2>Conflito no Oriente Médio</h2>
+<p>Novas movimentações militares foram registradas hoje.</p>
+<small>Atualizado agora</small>
 </div>
-`;
 
-}
+<div class="noticia">
+<h2>Bombardeios durante a madrugada</h2>
+<p>Relatórios indicam ataques em várias regiões.</p>
+<small>Atualizado há 10 minutos</small>
+</div>
 
-});
+<div class="noticia">
+<h2>Atualizações internacionais</h2>
+<p>Países acompanham a situação com atenção.</p>
+<small>Atualizado há 20 minutos</small>
+</div>
 
-document.getElementById("news").innerHTML=html;
-
-}
-
-carregarNoticias();
-
-setInterval(carregarNoticias,60000);
-
-</script>
+</div>
 
 </body>
 </html>
