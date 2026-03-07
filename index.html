@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 <head>
+
 <meta charset="UTF-8">
-<title>Radar de Guerras</title>
+<title>Radar Global de Guerras</title>
 
 <style>
 
@@ -17,34 +17,76 @@ margin:0;
 header{
 background:#020617;
 padding:20px;
+text-align:center;
 }
 
 h1{
 color:#ef4444;
 }
 
-#news{
+nav{
+background:#111827;
+padding:10px;
+text-align:center;
+}
+
+nav a{
+color:white;
+margin:10px;
+text-decoration:none;
+font-weight:bold;
+}
+
+.container{
+max-width:900px;
+margin:auto;
 padding:20px;
 }
 
 .card{
 background:#1e293b;
 padding:15px;
-margin-bottom:15px;
+margin-bottom:20px;
 border-radius:8px;
 }
 
+.card h2{
+color:#38bdf8;
+}
+
+.time{
+color:#94a3b8;
+font-size:12px;
+}
+
 </style>
+
 </head>
 
 <body>
 
 <header>
-<h1>🌍 Radar de Guerras</h1>
-<p>Atualização automática de conflitos no mundo</p>
+
+<h1>🌍 Radar Global de Guerras</h1>
+<p>Atualização automática de conflitos mundiais</p>
+
 </header>
 
+<nav>
+
+<a href="#">Início</a>
+<a href="#">Oriente Médio</a>
+<a href="#">Europa</a>
+<a href="#">Ásia</a>
+<a href="#">Ao Vivo</a>
+
+</nav>
+
+<div class="container">
+
 <div id="news"></div>
+
+</div>
 
 <script>
 
@@ -58,13 +100,17 @@ let data=await res.json()
 
 let html=""
 
-data.items.slice(0,10).forEach(n=>{
+data.items.slice(0,15).forEach(n=>{
 
 html+=`
 <div class="card">
+
 <h2>${n.title}</h2>
+
 <p>${n.description}</p>
-<small>${n.pubDate}</small>
+
+<div class="time">${n.pubDate}</div>
+
 </div>
 `
 
@@ -81,5 +127,4 @@ setInterval(carregarNoticias,60000)
 </script>
 
 </body>
-
 </html>
