@@ -17,45 +17,62 @@ header{
 background:#c4170c;
 color:white;
 padding:15px;
-font-size:28px;
+font-size:30px;
 font-weight:bold;
 }
 
 nav{
-background:#ffffff;
+background:white;
 padding:10px;
 border-bottom:1px solid #ddd;
 }
 
 nav a{
-margin-right:15px;
+margin-right:20px;
 text-decoration:none;
 color:#c4170c;
 font-weight:bold;
 }
 
 .container{
-max-width:900px;
+max-width:1100px;
 margin:auto;
 padding:20px;
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:20px;
+}
+
+.principal{
+background:white;
+padding:20px;
+border-radius:5px;
+}
+
+.principal img{
+width:100%;
+border-radius:5px;
+}
+
+.principal h1{
+color:#c4170c;
+}
+
+.lateral{
+display:flex;
+flex-direction:column;
+gap:20px;
 }
 
 .noticia{
 background:white;
-padding:20px;
-margin-bottom:20px;
+padding:15px;
 border-radius:5px;
-box-shadow:0 0 5px rgba(0,0,0,0.1);
-}
-
-.noticia h2{
-margin-top:0;
-color:#c4170c;
 }
 
 .data{
 color:gray;
-font-size:14px;
+font-size:13px;
 }
 
 footer{
@@ -82,28 +99,44 @@ ATUALIZANDO FRANCANOS
 
 <div class="container">
 
+<div class="principal">
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/3a/Gaza_Skyline.jpg">
+
+<h1>Conflito no Oriente Médio se intensifica</h1>
+
+<p class="data">Atualizado agora</p>
+
+<p>
+Novos ataques e movimentações militares foram registrados durante a madrugada.
+Autoridades internacionais monitoram a situação e pedem redução da escalada.
+</p>
+
+</div>
+
+<div class="lateral">
+
 <div class="noticia">
-<h2>Conflito entre Israel e grupos armados continua</h2>
-<p class="data">06/03/2026 - Atualizado agora</p>
-<p>Novos confrontos foram registrados nesta sexta-feira. Autoridades internacionais acompanham a situação.</p>
+<h3>Ataques continuam durante a noite</h3>
+<p class="data">06/03/2026</p>
 </div>
 
 <div class="noticia">
-<h2>Ataques aéreos aumentam tensão na região</h2>
+<h3>Explosões são registradas em várias cidades</h3>
 <p class="data">06/03/2026</p>
-<p>Explosões foram relatadas em várias áreas durante a madrugada.</p>
 </div>
 
 <div class="noticia">
-<h2>Líderes mundiais pedem cessar-fogo</h2>
+<h3>Líderes discutem cessar-fogo</h3>
 <p class="data">06/03/2026</p>
-<p>Diplomatas discutem medidas para reduzir a escalada do conflito.</p>
+</div>
+
 </div>
 
 </div>
 
 <footer>
-Portal Atualizando Francanos - Notícias em tempo real
+Portal Atualizando Francanos - Notícias ao vivo
 </footer>
 
 </body>
