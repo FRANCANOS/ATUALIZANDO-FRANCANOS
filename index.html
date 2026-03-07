@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>FRANCA</title>
+<title>FRANCA - Notícias Globais</title>
 
 <style>
 
@@ -25,7 +25,6 @@ background:#a50f06;
 padding:10px;
 display:flex;
 gap:20px;
-flex-wrap:wrap;
 }
 
 .menu a{
@@ -33,36 +32,17 @@ color:white;
 text-decoration:none;
 }
 
-/* breaking news */
-
 .breaking{
 background:black;
 color:white;
 padding:10px;
-font-weight:bold;
-display:flex;
-gap:10px;
-}
-
-.alert{
-color:red;
-animation:blink 1s infinite;
-}
-
-@keyframes blink{
-0%{opacity:1}
-50%{opacity:0}
-100%{opacity:1}
-}
-
-.ticker{
 overflow:hidden;
 white-space:nowrap;
 }
 
-.ticker span{
+.breaking span{
 display:inline-block;
-animation:scroll 25s linear infinite;
+animation:scroll 30s linear infinite;
 }
 
 @keyframes scroll{
@@ -101,40 +81,26 @@ margin:0;
 }
 
 .main img{
-height:380px;
+height:350px;
 }
 
-.main h2{
-font-size:28px;
+.section{
+margin-top:40px;
 }
 
-.small img{
-height:120px;
-}
-
-.small h2{
-font-size:16px;
+.newsbox{
+background:white;
+padding:15px;
+margin-bottom:10px;
+border-radius:6px;
+box-shadow:0 2px 6px rgba(0,0,0,0.1);
 }
 
 .footer{
-text-align:center;
+margin-top:40px;
 padding:20px;
+text-align:center;
 background:white;
-margin-top:30px;
-}
-
-/* celular */
-
-@media(max-width:800px){
-
-.grid{
-grid-template-columns:1fr;
-}
-
-.main img{
-height:250px;
-}
-
 }
 
 </style>
@@ -149,52 +115,62 @@ FRANCA
 <div class="menu">
 <a href="#">Últimas</a>
 <a href="#">Mundo</a>
+<a href="#">Guerras</a>
 <a href="#">Tecnologia</a>
 <a href="#">Economia</a>
-<a href="#">Ciência</a>
-<a href="#">Esportes</a>
 </div>
 
 <div class="breaking">
-
-<div class="alert">
-● BREAKING
-</div>
-
-<div class="ticker">
-<span id="ticker">Carregando...</span>
-</div>
-
+<span id="ticker">Carregando notícias...</span>
 </div>
 
 <div class="container">
 
 <div id="news" class="grid">
-Carregando notícias...
+Carregando...
+</div>
+
+<div class="section">
+
+<h2>⚔️ Guerra Rússia x Ucrânia</h2>
+
+<div id="ukraineNews">
+Carregando...
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>⚠️ Oriente Médio / Irã</h2>
+
+<div id="iranNews">
+Carregando...
+</div>
+
+</div>
+
+<div class="section">
+
+<h2>🌍 Atualizações Globais</h2>
+
+<div id="globalNews">
+Carregando...
+</div>
+
 </div>
 
 </div>
 
 <div class="footer">
-Portal FRANCA • Notícias em tempo real
+Portal FRANCA • Monitor global
 </div>
 
 <script>
 
 let headlines=[];
 
-async function traduzir(texto){
-
-let url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(texto)}&langpair=en|pt`;
-
-let res=await fetch(url);
-let data=await res.json();
-
-return data.responseData.translatedText;
-
-}
-
-async function carregarNoticias(){
+async function carregarPrincipais(){
 
 const url="https://api.rss2json.com/v1/api.json?rss_url=https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml";
 
@@ -205,37 +181,33 @@ let html="";
 
 headlines=[];
 
-for(let i=0;i<9;i++){
-
-let n=data.items[i];
-
-let titulo=await traduzir(n.title);
+data.items.slice(0,6).forEach((n,i)=>{
 
 let img=n.thumbnail || "https://picsum.photos/600/400?random="+i;
 
-headlines.push(titulo);
+headlines.push(n.title);
 
 if(i==0){
 
 html+=`
 <div class="card main">
 <img src="${img}">
-<h2>${titulo}</h2>
+<h2>${n.title}</h2>
 </div>
 `;
 
 }else{
 
 html+=`
-<div class="card small">
+<div class="card">
 <img src="${img}">
-<h2>${titulo}</h2>
+<h2>${n.title}</h2>
 </div>
 `;
 
 }
 
-}
+});
 
 document.getElementById("news").innerHTML=html;
 
@@ -243,9 +215,66 @@ document.getElementById("ticker").innerText=headlines.join(" • ");
 
 }
 
-carregarNoticias();
+async function carregarGuerras(){
 
-setInterval(carregarNoticias,10000);
+const url="https://api.rss2json.com/v1/api.json?rss_url=https://rss.nytimes.com/services/xml/rss/nyt/World.xml";
+
+const res=await fetch(url);
+const data=await res.json();
+
+let ukraine="";
+let iran="";
+let global="";
+
+data.items.forEach(n=>{
+
+let t=n.title.toLowerCase();
+
+if(t.includes("ukraine") || t.includes("russia")){
+
+ukraine+=`
+<div class="newsbox">
+<h3>${n.title}</h3>
+<p>${n.pubDate}</p>
+<a href="${n.link}" target="_blank">Ler notícia</a>
+</div>
+`;
+
+}else if(t.includes("iran") || t.includes("israel") || t.includes("middle east")){
+
+iran+=`
+<div class="newsbox">
+<h3>${n.title}</h3>
+<p>${n.pubDate}</p>
+<a href="${n.link}" target="_blank">Ler notícia</a>
+</div>
+`;
+
+}else{
+
+global+=`
+<div class="newsbox">
+<h3>${n.title}</h3>
+<p>${n.pubDate}</p>
+<a href="${n.link}" target="_blank">Ler notícia</a>
+</div>
+`;
+
+}
+
+});
+
+document.getElementById("ukraineNews").innerHTML=ukraine;
+document.getElementById("iranNews").innerHTML=iran;
+document.getElementById("globalNews").innerHTML=global;
+
+}
+
+carregarPrincipais();
+carregarGuerras();
+
+setInterval(carregarPrincipais,15000);
+setInterval(carregarGuerras,15000);
 
 </script>
 
