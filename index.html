@@ -2,105 +2,250 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Live News</title>
+<title>FRANCA</title>
 
 <style>
+
 body{
-    font-family: Georgia, serif;
-    background:#f4f4f4;
-    margin:30px;
+font-family:Arial;
+margin:0;
+background:#f2f2f2;
 }
 
-h1{
-    text-align:center;
+.topbar{
+background:#c4170c;
+color:white;
+padding:15px;
+font-size:36px;
+font-weight:bold;
 }
 
-#news{
-    max-width:1000px;
-    margin:auto;
+.menu{
+background:#a50f06;
+padding:10px;
+display:flex;
+gap:20px;
+flex-wrap:wrap;
 }
 
-.article{
-    display:flex;
-    gap:15px;
-    background:white;
-    padding:15px;
-    margin-bottom:15px;
-    border:1px solid #ddd;
+.menu a{
+color:white;
+text-decoration:none;
 }
 
-.article img{
-    width:180px;
-    height:120px;
-    object-fit:cover;
+/* breaking news */
+
+.breaking{
+background:black;
+color:white;
+padding:10px;
+font-weight:bold;
+display:flex;
+gap:10px;
 }
 
-.article h2{
-    margin:0;
-    font-size:20px;
+.alert{
+color:red;
+animation:blink 1s infinite;
 }
 
-.article a{
-    text-decoration:none;
-    color:black;
+@keyframes blink{
+0%{opacity:1}
+50%{opacity:0}
+100%{opacity:1}
 }
 
-.date{
-    font-size:12px;
-    color:gray;
+.ticker{
+overflow:hidden;
+white-space:nowrap;
 }
+
+.ticker span{
+display:inline-block;
+animation:scroll 25s linear infinite;
+}
+
+@keyframes scroll{
+0%{transform:translateX(100%)}
+100%{transform:translateX(-100%)}
+}
+
+.container{
+max-width:1200px;
+margin:auto;
+padding:20px;
+}
+
+.grid{
+display:grid;
+grid-template-columns:2fr 1fr 1fr;
+gap:20px;
+}
+
+.card{
+background:white;
+border-radius:6px;
+overflow:hidden;
+box-shadow:0 2px 8px rgba(0,0,0,0.15);
+}
+
+.card img{
+width:100%;
+height:220px;
+object-fit:cover;
+}
+
+.card h2{
+padding:10px;
+margin:0;
+}
+
+.main img{
+height:380px;
+}
+
+.main h2{
+font-size:28px;
+}
+
+.small img{
+height:120px;
+}
+
+.small h2{
+font-size:16px;
+}
+
+.footer{
+text-align:center;
+padding:20px;
+background:white;
+margin-top:30px;
+}
+
+/* celular */
+
+@media(max-width:800px){
+
+.grid{
+grid-template-columns:1fr;
+}
+
+.main img{
+height:250px;
+}
+
+}
+
 </style>
 </head>
 
 <body>
 
-<h1>📰 Live News</h1>
+<div class="topbar">
+FRANCA
+</div>
 
-<div id="news">Carregando notícias...</div>
+<div class="menu">
+<a href="#">Últimas</a>
+<a href="#">Mundo</a>
+<a href="#">Tecnologia</a>
+<a href="#">Economia</a>
+<a href="#">Ciência</a>
+<a href="#">Esportes</a>
+</div>
+
+<div class="breaking">
+
+<div class="alert">
+● BREAKING
+</div>
+
+<div class="ticker">
+<span id="ticker">Carregando...</span>
+</div>
+
+</div>
+
+<div class="container">
+
+<div id="news" class="grid">
+Carregando notícias...
+</div>
+
+</div>
+
+<div class="footer">
+Portal FRANCA • Notícias em tempo real
+</div>
 
 <script>
 
-async function carregarNoticias(){
+let headlines=[];
 
-const url = "https://api.rss2json.com/v1/api.json?rss_url=https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml";
+async function traduzir(texto){
 
-const resposta = await fetch(url);
-const dados = await resposta.json();
+let url=`https://api.mymemory.translated.net/get?q=${encodeURIComponent(texto)}&langpair=en|pt`;
 
-let html = "";
+let res=await fetch(url);
+let data=await res.json();
 
-dados.items.slice(0,10).forEach(noticia => {
+return data.responseData.translatedText;
 
-let imagem = "";
-
-if(noticia.thumbnail){
-    imagem = noticia.thumbnail;
 }
 
-html += `
-<div class="article">
+async function carregarNoticias(){
 
-<img src="${imagem}">
+const url="https://api.rss2json.com/v1/api.json?rss_url=https://rss.nytimes.com/services/xml/rss/nyt/HomePage.xml";
 
-<div>
-<a href="${noticia.link}" target="_blank">
-<h2>${noticia.title}</h2>
-</a>
+const res=await fetch(url);
+const data=await res.json();
 
-<div class="date">${noticia.pubDate}</div>
-</div>
+let html="";
 
+headlines=[];
+
+for(let i=0;i<9;i++){
+
+let n=data.items[i];
+
+let titulo=await traduzir(n.title);
+
+let img=n.thumbnail || "https://picsum.photos/600/400?random="+i;
+
+headlines.push(titulo);
+
+if(i==0){
+
+html+=`
+<div class="card main">
+<img src="${img}">
+<h2>${titulo}</h2>
 </div>
 `;
 
-});
+}else{
 
-document.getElementById("news").innerHTML = html;
+html+=`
+<div class="card small">
+<img src="${img}">
+<h2>${titulo}</h2>
+</div>
+`;
+
+}
+
+}
+
+document.getElementById("news").innerHTML=html;
+
+document.getElementById("ticker").innerText=headlines.join(" • ");
 
 }
 
 carregarNoticias();
-setInterval(carregarNoticias,30000);
+
+setInterval(carregarNoticias,10000);
 
 </script>
 
