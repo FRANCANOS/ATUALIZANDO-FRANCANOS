@@ -1,94 +1,85 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 <meta charset="UTF-8">
-<title>Portal Local</title>
+<title>Radar de Guerras</title>
 
 <style>
 
 body{
-font-family: Arial;
-background:#f2f2f2;
+font-family:Arial;
+background:#0f172a;
+color:white;
 margin:0;
 }
 
 header{
-background:#c4170c;
-color:white;
+background:#020617;
 padding:20px;
-font-size:28px;
-font-weight:bold;
 }
 
-.container{
-display:grid;
-grid-template-columns: repeat(3,1fr);
-gap:20px;
+h1{
+color:#ef4444;
+}
+
+#news{
 padding:20px;
 }
 
 .card{
-background:white;
-border-radius:5px;
-overflow:hidden;
-box-shadow:0 0 5px rgba(0,0,0,0.2);
-}
-
-.card img{
-width:100%;
-}
-
-.card h3{
-padding:10px;
-}
-
-.card a{
-text-decoration:none;
-color:black;
-}
-
-.card p{
-padding:0 10px 10px 10px;
-color:#555;
+background:#1e293b;
+padding:15px;
+margin-bottom:15px;
+border-radius:8px;
 }
 
 </style>
-
 </head>
 
 <body>
 
 <header>
-Meu Portal de Notícias
+<h1>🌍 Radar de Guerras</h1>
+<p>Atualização automática de conflitos no mundo</p>
 </header>
 
-<div class="container">
+<div id="news"></div>
 
+<script>
+
+async function carregarNoticias(){
+
+let url="https://api.rss2json.com/v1/api.json?rss_url=https://feeds.bbci.co.uk/news/world/rss.xml"
+
+let res=await fetch(url)
+
+let data=await res.json()
+
+let html=""
+
+data.items.slice(0,10).forEach(n=>{
+
+html+=`
 <div class="card">
-<a href="https://www.nytimes.com">
-<img src="https://static01.nyt.com/images/2024/01/01/world/sample.jpg">
-<h3>Notícia internacional importante</h3>
-<p>Resumo da notícia que você colocou manualmente.</p>
-</a>
+<h2>${n.title}</h2>
+<p>${n.description}</p>
+<small>${n.pubDate}</small>
 </div>
+`
 
-<div class="card">
-<a href="https://www.nytimes.com">
-<img src="https://static01.nyt.com/images/2024/01/01/business/sample.jpg">
-<h3>Economia mundial</h3>
-<p>Outra notícia de exemplo.</p>
-</a>
-</div>
+})
 
-<div class="card">
-<a href="https://www.nytimes.com">
-<img src="https://static01.nyt.com/images/2024/01/01/technology/sample.jpg">
-<h3>Tecnologia</h3>
-<p>Matéria sobre tecnologia.</p>
-</a>
-</div>
+document.getElementById("news").innerHTML=html
 
-</div>
+}
+
+carregarNoticias()
+
+setInterval(carregarNoticias,60000)
+
+</script>
 
 </body>
+
 </html>
