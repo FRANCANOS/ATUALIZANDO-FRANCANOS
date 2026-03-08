@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Centro Global de Monitoramento</title>
+<title>Portal do Biel</title>
 
 <style>
 body {
@@ -80,7 +80,7 @@ iframe {
 <body>
 
 <header>
-🌍 CENTRO GLOBAL DE MONITORAMENTO
+🌍 PORTAL DO BIEL
 </header>
 
 <nav>
@@ -190,7 +190,7 @@ async function noticias() {
   let html = "<div class='feed'><h2>📰 Notícias de Conflitos</h2>";
 
   data.items.slice(0, 10).forEach(n => {
-    let resumo = n.title.substring(0, 80);  // Pegando um resumo do título.
+    let resumo = n.title.substring(0, 80);
 
     html += `
     <div class="item">
@@ -218,7 +218,7 @@ function navios() {
 }
 
 async function mostrarNavios() {
-  // Simulação de dados, substitua com a URL correta para API de navios
+
   const data = [
     { name: "USS Nimitz", type: "Porta-aviões", latitude: "23.122", longitude: "131.512", status: "Em operação" },
     { name: "USS Ohio", type: "Submarino nuclear", latitude: "22.033", longitude: "132.765", status: "Em operação" }
