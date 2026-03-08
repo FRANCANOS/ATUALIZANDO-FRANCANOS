@@ -6,7 +6,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Centro de Comando</title>
+<title>Painel do Biel</title>
 
 <style>
 
@@ -19,42 +19,40 @@ color:#00ff9c;
 
 header{
 background:#111;
-padding:15px;
+padding:12px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+font-size:16px;
 border-bottom:2px solid #00ff9c;
-}
-
-header h1{
-margin:0;
-font-size:22px;
 }
 
 #painel{
 display:flex;
+flex-direction:column;
 gap:10px;
-background:#0a0a0a;
 padding:10px;
-border-bottom:1px solid #00ff9c;
+background:#0a0a0a;
 }
 
 .botao{
 background:#111;
 border:1px solid #00ff9c;
 color:#00ff9c;
-padding:10px 15px;
-cursor:pointer;
+padding:14px;
+font-size:16px;
 font-weight:bold;
+cursor:pointer;
+width:100%;
 }
 
-.botao:hover{
+.botao:active{
 background:#00ff9c;
 color:black;
 }
 
 #conteudo{
-height:85vh;
+height:75vh;
 }
 
 iframe{
@@ -64,14 +62,12 @@ border:none;
 }
 
 #alerta{
-position:fixed;
-bottom:10px;
-left:10px;
 background:#111;
-border:1px solid red;
+border-top:1px solid red;
 color:red;
-padding:10px;
-font-size:13px;
+padding:8px;
+font-size:12px;
+text-align:center;
 }
 
 </style>
@@ -82,7 +78,7 @@ font-size:13px;
 
 <header>
 
-<h1>🛰 CENTRO DE COMANDO GLOBAL</h1>
+🛰 PAINEL DO BIEL
 
 <div>
 🕒 <span id="hora"></span>
@@ -92,9 +88,9 @@ font-size:13px;
 
 <div id="painel">
 
-<button class="botao" onclick="radar()">🛩 Radar Militar</button>
+<button class="botao" onclick="radar()">🛩 AVIÕES MILITARES</button>
 
-<button class="botao" onclick="missoes()">🚀 Ataques / Mísseis</button>
+<button class="botao" onclick="missoes()">🚀 ATAQUES / MÍSSEIS</button>
 
 </div>
 
@@ -106,13 +102,14 @@ font-size:13px;
 
 <div id="alerta">
 
-⚠ MONITORAMENTO ATIVO<br>
-• Aviões militares<br>
-• Eventos de combate<br>
+⚠ MONITORAMENTO GLOBAL ATIVO
 
 </div>
 
 <script>
+
+const hora = document.getElementById("hora");
+const conteudo = document.getElementById("conteudo");
 
 setInterval(()=>{
 hora.innerText=new Date().toLocaleTimeString();
@@ -123,7 +120,7 @@ conteudo.innerHTML=`<iframe src="https://globe.adsbexchange.com/?mil"></iframe>`
 }
 
 function missoes(){
-conteudo.innerHTML=`<iframe src="https://liveuamap.com/"></iframe>`;
+window.open("https://liveuamap.com/","_blank");
 }
 
 </script>
