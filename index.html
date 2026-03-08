@@ -6,49 +6,55 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Portal do Biel</title>
+<title>Centro de Comando</title>
 
 <style>
 
 body{
 margin:0;
-font-family:Arial;
-background:#0b0b0b;
-color:white;
+font-family:Courier New, monospace;
+background:#050505;
+color:#00ff9c;
 }
 
 header{
-background:#c4170c;
-padding:20px;
-font-size:26px;
-font-weight:bold;
+background:#111;
+padding:15px;
 display:flex;
 justify-content:space-between;
 align-items:center;
+border-bottom:2px solid #00ff9c;
 }
 
-nav{
-background:#111;
-padding:12px;
+header h1{
+margin:0;
+font-size:22px;
+}
+
+#painel{
 display:flex;
-gap:20px;
-flex-wrap:wrap;
-border-bottom:2px solid #c4170c;
+gap:10px;
+background:#0a0a0a;
+padding:10px;
+border-bottom:1px solid #00ff9c;
 }
 
-nav a{
-color:#ddd;
-text-decoration:none;
-font-weight:bold;
+.botao{
+background:#111;
+border:1px solid #00ff9c;
+color:#00ff9c;
+padding:10px 15px;
 cursor:pointer;
+font-weight:bold;
 }
 
-nav a:hover{
-color:#ff3333;
+.botao:hover{
+background:#00ff9c;
+color:black;
 }
 
 #conteudo{
-height:90vh;
+height:85vh;
 }
 
 iframe{
@@ -57,23 +63,15 @@ height:100%;
 border:none;
 }
 
-.feed{
-padding:20px;
-}
-
-.news{
-display:flex;
-gap:15px;
-margin-bottom:20px;
+#alerta{
+position:fixed;
+bottom:10px;
+left:10px;
 background:#111;
+border:1px solid red;
+color:red;
 padding:10px;
-border-radius:6px;
-}
-
-.news img{
-width:120px;
-height:80px;
-object-fit:cover;
+font-size:13px;
 }
 
 </style>
@@ -84,7 +82,7 @@ object-fit:cover;
 
 <header>
 
-🌍 PORTAL DO BIEL
+<h1>🛰 CENTRO DE COMANDO GLOBAL</h1>
 
 <div>
 🕒 <span id="hora"></span>
@@ -92,207 +90,40 @@ object-fit:cover;
 
 </header>
 
-<nav>
+<div id="painel">
 
-<a onclick="aviComercial()">✈️ Aviões Comerciais</a>
+<button class="botao" onclick="radar()">🛩 Radar Militar</button>
 
-<a onclick="aviMilitar()">🛩 Aviões Militares</a>
+<button class="botao" onclick="missoes()">🚀 Ataques / Mísseis</button>
 
-<a onclick="aviTodos()">🛫 Todos Aviões</a>
-
-<a onclick="navios()">🚢 Navios</a>
-
-<a onclick="missoes()">💥 Ataques 24h</a>
-
-<a onclick="avistamentos()">👀 Avistamentos</a>
-
-<a onclick="foguetes()">🚀 Lançamentos</a>
-
-<a onclick="noticias()">📰 Notícias</a>
-
-</nav>
+</div>
 
 <div id="conteudo">
 
-<div class="feed">
-
-<h2>🌍 Centro de Monitoramento Global</h2>
-
-<ul>
-<li>✈️ Rastreamento de aviões</li>
-<li>🚢 Monitoramento naval</li>
-<li>💥 Ataques e explosões recentes</li>
-<li>👀 Avistamentos navais</li>
-<li>🚀 Lançamentos espaciais</li>
-<li>📰 Notícias internacionais</li>
-</ul>
+<iframe src="https://globe.adsbexchange.com/?mil"></iframe>
 
 </div>
+
+<div id="alerta">
+
+⚠ MONITORAMENTO ATIVO<br>
+• Aviões militares<br>
+• Eventos de combate<br>
 
 </div>
 
 <script>
 
-/* relógio */
-
 setInterval(()=>{
 hora.innerText=new Date().toLocaleTimeString();
 },1000);
 
-
-/* aviões */
-
-function aviComercial(){
-conteudo.innerHTML=`<iframe src="https://globe.adsbexchange.com/?filterType=1"></iframe>`;
-}
-
-function aviMilitar(){
+function radar(){
 conteudo.innerHTML=`<iframe src="https://globe.adsbexchange.com/?mil"></iframe>`;
 }
 
-function aviTodos(){
-conteudo.innerHTML=`<iframe src="https://globe.adsbexchange.com/"></iframe>`;
-}
-
-
-/* navios */
-
-function navios(){
-conteudo.innerHTML=`<iframe src="https://www.marinetraffic.com/en/ais/embed/zoom:2/centery:20/centerx:0/maptype:4"></iframe>`;
-}
-
-
-/* ataques */
-
 function missoes(){
 conteudo.innerHTML=`<iframe src="https://liveuamap.com/"></iframe>`;
-}
-
-
-/* avistamentos */
-
-function avistamentos(){
-
-let registros=[
-
-{
-tipo:"Submarino",
-modelo:"Yasen-class",
-pais:"Rússia",
-hora:"02:10 UTC"
-},
-
-{
-tipo:"Navio",
-modelo:"Arleigh Burke-class Destroyer",
-pais:"Estados Unidos",
-hora:"04:35 UTC"
-},
-
-{
-tipo:"Submarino",
-modelo:"Type 093 Shang-class",
-pais:"China",
-hora:"06:12 UTC"
-},
-
-{
-tipo:"Navio",
-modelo:"Type 055 Destroyer",
-pais:"China",
-hora:"08:50 UTC"
-}
-
-];
-
-let html="<div class='feed'><h2>👀 Avistamentos Recentes</h2>";
-
-registros.forEach(r=>{
-
-html+=`
-<div style="margin-bottom:15px;border-left:3px solid red;padding-left:10px">
-
-🚨 Avistamento Detectado<br>
-
-⚓ Tipo: ${r.tipo}<br>
-🛠 Modelo: ${r.modelo}<br>
-🏳️ País: ${r.pais}<br>
-🕒 Horário: ${r.hora}
-
-</div>
-`;
-
-});
-
-html+="</div>";
-
-conteudo.innerHTML=html;
-
-}
-
-
-/* lançamentos */
-
-async function foguetes(){
-
-let res=await fetch("https://ll.thespacedevs.com/2.2.0/launch/upcoming/?limit=5");
-
-let data=await res.json();
-
-let html="<div class='feed'><h2>🚀 Lançamentos Espaciais</h2>";
-
-data.results.forEach(l=>{
-
-html+=`
-<div style="margin-bottom:15px;border-left:3px solid red;padding-left:10px">
-🚀 ${l.name}<br>
-📅 ${l.net}
-</div>
-`;
-
-});
-
-html+="</div>";
-
-conteudo.innerHTML=html;
-
-}
-
-
-/* noticias */
-
-async function noticias(){
-
-let url="https://api.rss2json.com/v1/api.json?rss_url=https://news.google.com/rss?hl=pt-BR&gl=BR&ceid=BR:pt";
-
-let res=await fetch(url);
-let data=await res.json();
-
-let html="<div class='feed'><h2>📰 Notícias</h2>";
-
-data.items.slice(0,12).forEach(n=>{
-
-html+=`
-
-<div class="news">
-
-<img src="${n.thumbnail || 'https://via.placeholder.com/120'}">
-
-<div>
-<b>${n.title}</b><br>
-<a href="${n.link}" target="_blank" style="color:#ff4444">Abrir notícia</a>
-</div>
-
-</div>
-
-`;
-
-});
-
-html+="</div>";
-
-conteudo.innerHTML=html;
-
 }
 
 </script>
