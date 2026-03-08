@@ -26,32 +26,8 @@ align-items:center;
 border-bottom:2px solid #00ff9c;
 }
 
-#painel{
-display:flex;
-flex-direction:column;
-gap:10px;
-padding:10px;
-background:#0a0a0a;
-}
-
-.botao{
-background:#111;
-border:1px solid #00ff9c;
-color:#00ff9c;
-padding:14px;
-font-size:16px;
-font-weight:bold;
-cursor:pointer;
-width:100%;
-}
-
-.botao:active{
-background:#00ff9c;
-color:black;
-}
-
 #conteudo{
-height:75vh;
+height:85vh;
 }
 
 iframe{
@@ -85,16 +61,6 @@ text-align:center;
 
 </header>
 
-<div id="painel">
-
-<button class="botao" onclick="radar()">🛩 AVIÕES MILITARES</button>
-
-<button class="botao" onclick="satelites()">🛰 SATÉLITES</button>
-
-<button class="botao" onclick="missoes()">🚀 ATAQUES / MÍSSEIS</button>
-
-</div>
-
 <div id="conteudo">
 
 <iframe src="https://globe.adsbexchange.com/?mil"></iframe>
@@ -102,29 +68,18 @@ text-align:center;
 </div>
 
 <div id="alerta">
-⚠ MONITORAMENTO GLOBAL ATIVO
+
+⚠ MONITORAMENTO DE AVIÕES MILITARES ATIVO
+
 </div>
 
 <script>
 
 const hora=document.getElementById("hora")
-const conteudo=document.getElementById("conteudo")
 
 setInterval(()=>{
 hora.innerText=new Date().toLocaleTimeString()
 },1000)
-
-function radar(){
-conteudo.innerHTML=`<iframe src="https://globe.adsbexchange.com/?mil"></iframe>`
-}
-
-function satelites(){
-conteudo.innerHTML=`<iframe src="https://satellitemap.space/"></iframe>`
-}
-
-function missoes(){
-window.open("https://liveuamap.com/","_blank")
-}
 
 </script>
 
