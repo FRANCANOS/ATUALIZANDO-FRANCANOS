@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google" content="notranslate"> <!-- Impede tradução automática -->
 <title>Painel do Biel - B-2 & Estrangeiros</title>
 <style>
 body{margin:0;font-family:Courier New, monospace;background:#050505;color:#00ff9c;}
@@ -65,7 +66,6 @@ function toggleAtencao(){painelAtencao.style.display=painelAtencao.style.display
 
 let trilhas={}
 
-// Adiciona B-2 Spirit
 function adicionarAparicao(id,tipo,horario,lat,lon,alt,vel){
 let linha=document.createElement("div")
 linha.className="aparicao"
@@ -75,7 +75,6 @@ if(!trilhas[id]) trilhas[id]=[]
 trilhas[id].push({lat,lon,horario})
 }
 
-// Adiciona avião estrangeiro detectado fora do país
 function adicionarAviãoEstrangeiro(id,tipo,pais,horario,lat,lon,alt,vel){
 let linha=document.createElement("div")
 linha.className="aparicao"
@@ -85,7 +84,6 @@ alerta.innerText=`🚨 AVIÃO ESTRANGEIRO DETECTADO: ${tipo} (${pais})`
 somAlerta.play()
 }
 
-// Detecta B-2 Spirit
 async function detectarB2(){
 try{
 const res=await fetch("https://api.adsbexchange.com/v2/mil/")
@@ -104,7 +102,6 @@ somAlerta.play()
 }catch(e){console.log("Erro ao detectar B-2",e)}
 }
 
-// Detecta aviões estrangeiros fora do país de origem
 async function detectarEstrangeiros(){
 try{
 const res=await fetch("https://api.adsbexchange.com/v2/mil/")
@@ -117,8 +114,7 @@ let pais=av.from||av.country||"Desconhecido"
 let tipo=av.t||av.desc||av.r||"Desconhecido"
 let alt=av.alt||"desconhecida", vel=av.gs||"desconhecida"
 let horario=new Date().toLocaleTimeString()
-// Aqui consideramos aviões de outros países, fora do seu país de origem
-if(pais!=="BR"){ // Ajuste "BR" para o seu país
+if(pais!=="BR"){ 
 let id=av.hex||av.icao||tipo
 adicionarAviãoEstrangeiro(id,tipo,pais,horario,lat,lon,alt,vel)
 count++
